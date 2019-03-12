@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/person_name_header"
+        android:text="Person"
+        app:theme="@style/TextHeaderTheme"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/default_margin_top"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/selected_contact"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/person_name_header"
+        android:layout_marginTop="@dimen/default_margin_top"
+        android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+        app:theme="@style/TextItemTheme">
+
+    </TextView>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_contact"
+        android:src="@drawable/ic_add_white_24dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@id/selected_contact"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/person_name_header"
+        app:layout_constraintBottom_toBottomOf="@id/selected_contact"
+        android:layout_marginStart="@dimen/default_margin_start"
+        android:background="@drawable/circle_blue_background"
+        android:layout_marginTop="@dimen/default_margin_top" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lending_date_header"
+        android:text="Lending Date"
+        app:theme="@style/TextHeaderTheme"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_contact"
+        android:layout_marginTop="@dimen/large_margin_top"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/selected_lending_date"
+        android:text="March 13, 2018"
+        app:theme="@style/TextItemTheme"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lending_date_header"
+        android:layout_marginTop="@dimen/default_margin_top"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lending_date_selector"
+        android:src="@drawable/ic_date_range_black_24dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@id/selected_lending_date"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/selected_lending_date"
+        android:layout_marginStart="@dimen/default_margin_start"
+        android:background="@color/white"/>
+
+    <!-- Debt Header -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/debt_header"
+        android:text="Debt Amount"
+        app:theme="@style/TextHeaderTheme"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lending_date_selector"
+        android:layout_marginTop="@dimen/large_margin_top"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/TextItemTheme"
+        android:text="$"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/debt_header"
+        app:layout_constraintBottom_toBottomOf="@+id/debt_amount"
+        android:id="@+id/dollar_sign"
+        />
+    <!-- Debt amount -->
+    <EditText
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/debt_amount"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/dollar_sign"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/debt_header"
+        android:textAlignment="center"
+        app:theme="@style/TextItemTheme"
+        android:layout_marginTop="@dimen/default_margin_top"
+        android:hint="25.00"
+        android:background="@drawable/grey_border_bottom"/>
+
+    <!-- Payments button -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_margin_top"
+        android:background="@drawable/orange_rounded_button"
+        android:id="@+id/create_debt"
+        android:padding="15dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/debt_amount">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:text="Create Debt"
+            android:id="@+id/text_add_to_cart"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+
+
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+

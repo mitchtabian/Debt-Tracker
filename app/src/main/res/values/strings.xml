@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">DebtTracker</string>
+
+    <string name="dialog_choose_contact">ChooseContactDialog</string>
+</resources>

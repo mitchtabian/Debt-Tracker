@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white">
+
+    <!-- Debt Status -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/debt_status_header"
+        android:text="Status"
+        app:theme="@style/TextHeaderTheme"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/default_margin_top"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/debt_status"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/debt_status_header"
+        android:layout_marginTop="@dimen/default_margin_top"
+        app:theme="@style/TextItemTheme" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/debt_status_icon"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@id/debt_status"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/debt_status_header"
+        android:layout_marginStart="@dimen/default_margin_start"
+        android:background="@color/white"
+        android:layout_marginTop="@dimen/default_margin_top" />
+
+    <!-- Person -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/person_name_header"
+        android:text="Person"
+        app:theme="@style/TextHeaderTheme"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/debt_status_icon"
+        android:layout_marginTop="@dimen/large_margin_top"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/selected_contact"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/person_name_header"
+        android:layout_marginTop="@dimen/default_margin_top"
+        android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
+        app:theme="@style/TextItemTheme"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/add_contact"
+        android:src="@drawable/ic_add_white_24dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@id/selected_contact"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/person_name_header"
+        app:layout_constraintBottom_toBottomOf="@id/selected_contact"
+        android:layout_marginStart="@dimen/default_margin_start"
+        android:background="@drawable/circle_blue_background"
+        android:layout_marginTop="@dimen/default_margin_top" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lending_date_header"
+        android:text="Lending Date"
+        app:theme="@style/TextHeaderTheme"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_contact"
+        android:layout_marginTop="@dimen/large_margin_top"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/selected_lending_date"
+        android:text="March 13, 2018"
+        app:theme="@style/TextItemTheme"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lending_date_header"
+        android:layout_marginTop="@dimen/default_margin_top"/>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/lending_date_selector"
+        android:src="@drawable/ic_date_range_black_24dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@id/selected_lending_date"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/selected_lending_date"
+        android:layout_marginStart="@dimen/default_margin_start"
+        android:background="@color/white"/>
+
+    <!-- Debt Header -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/debt_header"
+        android:text="Debt"
+        app:theme="@style/TextHeaderTheme"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lending_date_selector"
+        android:layout_marginTop="@dimen/large_margin_top"/>
+
+    <!-- Initial Header -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_bias="0.2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/debt_header"
+        android:id="@+id/initial_container"
+        android:orientation="vertical"
+        android:padding="0dp"
+        android:layout_margin="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/initial_header"
+            android:text="Initial"
+            app:theme="@style/TextItemTheme"
+            android:layout_marginTop="@dimen/default_margin_top"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/initial_cost"
+            android:textAlignment="center"
+            app:theme="@style/TextItemTheme"
+            android:layout_marginTop="@dimen/default_margin_top"
+            android:text="$120.00"
+            android:background="@drawable/grey_border_bottom"/>
+
+    </LinearLayout>
+
+
+    <!-- Remaining Header -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/default_margin_top"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintLeft_toRightOf="@+id/initial_container"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/debt_header"
+        android:id="@+id/remaining_container"
+        android:orientation="vertical"
+        android:padding="0dp"
+        android:layout_margin="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/remaining_header"
+            android:text="Remaining"
+            app:theme="@style/TextItemTheme"
+            android:layout_marginTop="@dimen/default_margin_top"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/remaining_cost"
+            android:textAlignment="center"
+            app:theme="@style/TextItemTheme"
+            android:layout_marginTop="@dimen/default_margin_top"
+            android:text="$80.00"
+            android:background="@drawable/grey_border_bottom"/>
+
+    </LinearLayout>
+
+
+
+    <!-- Payments Header -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/payments_header"
+        android:text="Payments"
+        app:theme="@style/TextHeaderTheme"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/initial_container"
+        android:layout_marginTop="@dimen/large_margin_top"/>
+
+    <!-- Payments List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/payments_header"
+        android:layout_marginTop="@dimen/default_margin_top"
+        android:id="@+id/payments_recyclerview">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+    <!-- Payments button -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_margin_top"
+        android:background="@drawable/orange_rounded_button"
+        android:id="@+id/add_payment"
+        android:padding="15dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/payments_recyclerview">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:text="Add Payment"
+            android:id="@+id/text_add_to_cart"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
+
+
+    </RelativeLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+

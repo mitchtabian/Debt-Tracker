@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="15dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="$100.00"
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/payment_amount"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="March 15, 2019"
+        android:textColor="@color/grey"
+        android:textSize="17sp"
+        android:gravity="end"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/payment_date"/>
+
+</RelativeLayout>

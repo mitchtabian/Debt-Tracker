@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".DebtUpdateActivity">
+
+    <item
+        android:id="@+id/action_edit"
+        android:title="Edit"
+        android:icon="@drawable/ic_edit_black_24dp"
+        app:showAsAction="always">
+
+    </item>
+
+</menu>
