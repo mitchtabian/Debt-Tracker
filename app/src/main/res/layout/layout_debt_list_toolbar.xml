@@ -9,11 +9,11 @@
     <androidx.appcompat.widget.SearchView
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="75"
+        android:layout_weight="65"
+        android:imeOptions="flagNoExtractUi"
         android:id="@+id/searchview">
 
     </androidx.appcompat.widget.SearchView>
-
 
     <LinearLayout
         android:orientation="vertical"
@@ -41,5 +41,13 @@
             android:id="@+id/total_debt"/>
 
     </LinearLayout>
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="10"
+        android:src="@drawable/ic_filter_list_black_24dp"
+        android:id="@+id/filter_list_icon"
+        android:paddingEnd="5dp"/>
 
 </LinearLayout>

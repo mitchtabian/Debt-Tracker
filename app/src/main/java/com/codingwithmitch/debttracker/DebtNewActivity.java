@@ -78,12 +78,13 @@ public class DebtNewActivity extends BaseActivity implements
     private void createNewDebt(){
         Log.d(TAG, "createNewDebt: called.");
         Log.d(TAG, "createNewDebt: " + viewModel.getSelectedDate().getValue());
+
         viewModel.insertNewDebt(
                 new Debt(
                         viewModel.getSelectedPerson().getValue(),
                         Calendar.getInstance().getTime(),
                         viewModel.getSelectedDate().getValue(),
-                        new BigDecimal(Double.parseDouble(mDebtAmount.getText().toString())),
+                        new BigDecimal(Double.parseDouble((mDebtAmount.getText().toString().equals("") ? "0.00" : mDebtAmount.getText().toString()))),
                         false
                 )
         ).observe(this, debtResource -> {

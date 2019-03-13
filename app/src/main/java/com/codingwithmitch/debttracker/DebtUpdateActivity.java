@@ -2,7 +2,6 @@ package com.codingwithmitch.debttracker;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputFilter;
@@ -26,8 +25,7 @@ import com.codingwithmitch.debttracker.models.Person;
 import com.codingwithmitch.debttracker.util.BigDecimalUtil;
 import com.codingwithmitch.debttracker.util.DateConverterUtil;
 import com.codingwithmitch.debttracker.util.DecimalDigitsInputFilter;
-import com.codingwithmitch.debttracker.util.LinearLayoutBuilder;
-import com.codingwithmitch.debttracker.util.Resource;
+import com.codingwithmitch.debttracker.util.LayoutBuilder;
 import com.codingwithmitch.debttracker.viewmodels.debts.DebtUpdateViewModel;
 
 import java.math.BigDecimal;
@@ -38,7 +36,6 @@ import java.util.Date;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.ContextCompat;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -208,6 +205,7 @@ public class DebtUpdateActivity extends BaseActivity implements
             settleDebt();
         }
         else{
+            reverseSettleDebt();
             updateUI(false);
         }
         String remainingAmount = "$" + viewModel.getRemainingAmount();
@@ -365,7 +363,7 @@ public class DebtUpdateActivity extends BaseActivity implements
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Make a Payment");
 
-        LinearLayout linearLayout = LinearLayoutBuilder.buildDialogLayout(this);
+        LinearLayout linearLayout = LayoutBuilder.buildDialogLayout(this);
 
         final TextView enterPaymentText = new TextView(this);
         enterPaymentText.setPadding(0, 0, 0, 20);
@@ -395,7 +393,7 @@ public class DebtUpdateActivity extends BaseActivity implements
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Initial Amount");
 
-        LinearLayout linearLayout = LinearLayoutBuilder.buildDialogLayout(this);
+        LinearLayout linearLayout = LayoutBuilder.buildDialogLayout(this);
 
         final TextView currentAmountView = new TextView(this);
         currentAmountView.setPadding(0, 0, 0, 20);
@@ -419,7 +417,7 @@ public class DebtUpdateActivity extends BaseActivity implements
 
         builder.setPositiveButton("UPDATE", (dialog, which) -> {
 
-            BigDecimal bd = new BigDecimal(input.getText().toString());
+            BigDecimal bd = new BigDecimal(Double.parseDouble((input.getText().toString().equals("") ? "0.00" : input.getText().toString())));
             String newAmount = "$" + BigDecimalUtil.getValue(bd);
             Log.d(TAG, "onClick: new Amount: " + newAmount);
             mInitialAmount.setText(newAmount);

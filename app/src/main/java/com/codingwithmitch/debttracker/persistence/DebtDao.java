@@ -25,11 +25,34 @@ public interface DebtDao {
     @Query("SELECT * FROM debts")
     Observable<List<Debt>> retrieveAllDebts();
 
-    // inner join on debts and payments tables
-    @Query("SELECT * FROM debts")
-    Observable<List<DebtAndAllPayments>> retrieveAllDebtsAndPayments();
+//    // inner join on debts and payments tables
+//    @Query("SELECT * FROM debts")
+//    Observable<List<DebtAndAllPayments>> retrieveAllDebtsAndPayments();
+
+    // inner join on debts and payments tables (DATE ASCENDING)
+    @Query("SELECT * FROM debts WHERE is_settled = :isSettled ORDER BY lending_date ASC")
+    Observable<List<DebtAndAllPayments>> retrieveAllDebtsAndPaymentsASC(boolean isSettled);
+
+    // inner join on debts and payments tables (DATE DESCENDING)
+    @Query("SELECT * FROM debts WHERE is_settled = :isSettled ORDER BY lending_date DESC")
+    Observable<List<DebtAndAllPayments>> retrieveAllDebtsAndPaymentsDES(boolean isSettled);
+
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

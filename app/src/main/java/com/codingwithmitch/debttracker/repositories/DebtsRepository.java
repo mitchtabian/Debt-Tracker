@@ -77,23 +77,23 @@ public class DebtsRepository {
         }.getAsLiveData();
     }
 
-//    public LiveData<Resource<List<Debt>>> retrieveAllDebts(){
-//        return new DatabaseBoundResource.RetrieveData<List<Debt>>(){
+//    public LiveData<Resource<List<DebtAndAllPayments>>> retrieveAllDebtsAndPayments(){
+//        return new DatabaseBoundResource.RetrieveData<List<DebtAndAllPayments>>(){
 //            @Override
 //            public void retrieveAllData() {
-//                debtDao.retrieveAllDebts()
+//                debtDao.retrieveAllDebtsAndPayments()
 //                        .subscribeOn(Schedulers.io())
 //                        .observeOn(AndroidSchedulers.mainThread())
-//                        .subscribe(new Observer<List<Debt>>() {
+//                        .subscribe(new Observer<List<DebtAndAllPayments>>() {
 //                            @Override
 //                            public void onSubscribe(Disposable d) {
 //                                disposables.add(d);
 //                            }
 //
 //                            @Override
-//                            public void onNext(List<Debt> debts) {
+//                            public void onNext(List<DebtAndAllPayments> debtsAndPayments) {
 //                                Log.d(TAG, "onNext: called.");
-//                                setValue(Resource.success(debts));
+//                                setValue(Resource.success(debtsAndPayments));
 //                            }
 //
 //                            @Override
@@ -111,39 +111,77 @@ public class DebtsRepository {
 //        }.getAsLiveData();
 //    }
 
-    public LiveData<Resource<List<DebtAndAllPayments>>> retrieveAllDebtsAndPayments(){
-        return new DatabaseBoundResource.RetrieveData<List<DebtAndAllPayments>>(){
-            @Override
-            public void retrieveAllData() {
-                debtDao.retrieveAllDebtsAndPayments()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new Observer<List<DebtAndAllPayments>>() {
-                            @Override
-                            public void onSubscribe(Disposable d) {
-                                disposables.add(d);
-                            }
 
-                            @Override
-                            public void onNext(List<DebtAndAllPayments> debtsAndPayments) {
-                                Log.d(TAG, "onNext: called.");
-                                setValue(Resource.success(debtsAndPayments));
-                            }
+    public LiveData<Resource<List<DebtAndAllPayments>>> retrieveAllDebtsAndPayments(boolean showOnlySettled, boolean orderByNewest){
 
-                            @Override
-                            public void onError(Throwable e) {
-                                Log.e(TAG, "onError: called. " + e.getMessage());
-                                setValue(Resource.error(e.getMessage(), null));
-                            }
+        if(orderByNewest){
+            return new DatabaseBoundResource.RetrieveData<List<DebtAndAllPayments>>(){
+                @Override
+                public void retrieveAllData() {
+                    debtDao.retrieveAllDebtsAndPaymentsDES(showOnlySettled)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Observer<List<DebtAndAllPayments>>() {
+                                @Override
+                                public void onSubscribe(Disposable d) {
+                                    disposables.add(d);
+                                }
 
-                            @Override
-                            public void onComplete() {
-                                Log.d(TAG, "onComplete: called.");
-                            }
-                        });
-            }
-        }.getAsLiveData();
+                                @Override
+                                public void onNext(List<DebtAndAllPayments> debtsAndPayments) {
+                                    Log.d(TAG, "onNext: called.");
+                                    setValue(Resource.success(debtsAndPayments));
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    Log.e(TAG, "onError: called. " + e.getMessage());
+                                    setValue(Resource.error(e.getMessage(), null));
+                                }
+
+                                @Override
+                                public void onComplete() {
+                                    Log.d(TAG, "onComplete: called.");
+                                }
+                            });
+                }
+            }.getAsLiveData();
+        }
+        else{
+            return new DatabaseBoundResource.RetrieveData<List<DebtAndAllPayments>>(){
+                @Override
+                public void retrieveAllData() {
+                    debtDao.retrieveAllDebtsAndPaymentsASC(showOnlySettled)
+                            .subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Observer<List<DebtAndAllPayments>>() {
+                                @Override
+                                public void onSubscribe(Disposable d) {
+                                    disposables.add(d);
+                                }
+
+                                @Override
+                                public void onNext(List<DebtAndAllPayments> debtsAndPayments) {
+                                    Log.d(TAG, "onNext: called.");
+                                    setValue(Resource.success(debtsAndPayments));
+                                }
+
+                                @Override
+                                public void onError(Throwable e) {
+                                    Log.e(TAG, "onError: called. " + e.getMessage());
+                                    setValue(Resource.error(e.getMessage(), null));
+                                }
+
+                                @Override
+                                public void onComplete() {
+                                    Log.d(TAG, "onComplete: called.");
+                                }
+                            });
+                }
+            }.getAsLiveData();
+        }
     }
+
 
     public void updateDebt(Debt debt){
         debtDao.updateDebt(debt)

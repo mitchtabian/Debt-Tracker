@@ -1,8 +1,11 @@
 package com.codingwithmitch.debttracker.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -10,8 +13,6 @@ import android.widget.TextView;
 import com.bumptech.glide.RequestManager;
 import com.codingwithmitch.debttracker.R;
 import com.codingwithmitch.debttracker.models.DebtAndAllPayments;
-import com.codingwithmitch.debttracker.models.Payment;
-import com.codingwithmitch.debttracker.models.PaymentAmount;
 import com.codingwithmitch.debttracker.util.BigDecimalUtil;
 import com.codingwithmitch.debttracker.util.DateConverterUtil;
 
@@ -22,9 +23,10 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class DebtRecyclerAdapter extends RecyclerView.Adapter<DebtRecyclerAdapter.DebtViewHolder> {
+public class DebtRecyclerAdapter extends RecyclerView.Adapter<DebtRecyclerAdapter.DebtViewHolder> implements Filterable {
 
-//    private List<Debt> debts = new ArrayList<>();
+    private static final String TAG = "DebtRecyclerAdapter";
+    private List<DebtAndAllPayments> filteredDebtsAndPayments = new ArrayList<>();
     private List<DebtAndAllPayments> debtsAndPayments = new ArrayList<>();
     private OnDebtSelected onDebtSelected;
     private RequestManager requestManager;
@@ -43,24 +45,54 @@ public class DebtRecyclerAdapter extends RecyclerView.Adapter<DebtRecyclerAdapte
 
     @Override
     public void onBindViewHolder(@NonNull DebtViewHolder holder, int position) {
-//        ((DebtViewHolder)holder).onBind(debts.get(position));
-        ((DebtViewHolder)holder).onBind(debtsAndPayments.get(position));
+        ((DebtViewHolder)holder).onBind(filteredDebtsAndPayments.get(position));
     }
 
     @Override
     public int getItemCount() {
-//        return debts.size();
-        return debtsAndPayments.size();
+        return filteredDebtsAndPayments.size();
     }
-
-//    public void setDebts(List<Debt> debts){
-//        this.debts = debts;
-//        notifyDataSetChanged();
-//    }
 
     public void setDebtsAndPayments(List<DebtAndAllPayments> data){
         this.debtsAndPayments = data;
         notifyDataSetChanged();
+    }
+
+    public List<DebtAndAllPayments> getDataSet(){
+        return filteredDebtsAndPayments;
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence constraint) {
+                Log.d(TAG, "performFiltering: called.");
+                String charSequenceString = constraint.toString();
+                if (charSequenceString.isEmpty()) {
+                    filteredDebtsAndPayments = debtsAndPayments;
+                } else {
+                    List<DebtAndAllPayments> filteredList = new ArrayList<>();
+                    for (DebtAndAllPayments data : debtsAndPayments) {
+                        if (data.debt.getPerson().getName().toLowerCase().contains(charSequenceString.toLowerCase())) {
+                            filteredList.add(data);
+                        }
+                        filteredDebtsAndPayments = filteredList;
+                    }
+
+                }
+                FilterResults results = new FilterResults();
+                results.values = filteredDebtsAndPayments;
+                return results;
+            }
+
+            @Override
+            protected void publishResults(CharSequence constraint, FilterResults results) {
+                Log.d(TAG, "publishResults: called.");
+                filteredDebtsAndPayments = (List<DebtAndAllPayments>) results.values;
+                notifyDataSetChanged();
+            }
+        };
     }
 
     public class DebtViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -86,26 +118,6 @@ public class DebtRecyclerAdapter extends RecyclerView.Adapter<DebtRecyclerAdapte
             quickSettle.setOnClickListener(this);
         }
 
-//        public void onBind(Debt debt){
-//
-//            requestManager
-//                    .load(debt.getPerson().getPhoto_uri())
-//                    .into(personPortrait);
-//
-//            name.setText(debt.getPerson().getName());
-//            lendingDate.setText(DateConverterUtil.getStringFormattedDate(debt.getLending_date()));
-//
-//            String amount = "$" + debt.getDebt_amount().toString();
-//            debtAmount.setText(amount);
-//
-//            if(!debt.getIs_settled()){
-//                quickSettle.setVisibility(View.VISIBLE);
-//            }
-//            else{
-//                quickSettle.setVisibility(View.GONE);
-//            }
-//        }
-
         public void onBind(DebtAndAllPayments data){
 
             requestManager
@@ -115,12 +127,14 @@ public class DebtRecyclerAdapter extends RecyclerView.Adapter<DebtRecyclerAdapte
             name.setText(data.debt.getPerson().getName());
             lendingDate.setText(DateConverterUtil.getStringFormattedDate(data.debt.getLending_date()));
 
-            double totalPayments = 0;
-            for(PaymentAmount amount: data.payments){
-                totalPayments = totalPayments + amount.amount.doubleValue();
+            if((new BigDecimal(BigDecimalUtil.getRemainingDebt(data))).doubleValue() > 0){
+                String debtRemaining = "$" + BigDecimalUtil.getRemainingDebt(data);
+                debtAmount.setText(debtRemaining);
             }
-            String debtRemaining = "$" + BigDecimalUtil.getValue(new BigDecimal(data.debt.getDebt_amount().doubleValue() - totalPayments));
-            debtAmount.setText(debtRemaining);
+            else{
+                debtAmount.setText("Settled");
+            }
+
 
             if(!data.debt.getIs_settled()){
                 quickSettle.setVisibility(View.VISIBLE);

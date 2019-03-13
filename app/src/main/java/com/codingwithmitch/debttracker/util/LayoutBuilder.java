@@ -3,9 +3,10 @@ package com.codingwithmitch.debttracker.util;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class LinearLayoutBuilder {
+public class LayoutBuilder {
 
 
     public static LinearLayout buildDialogLayout(Context context){
@@ -33,6 +34,7 @@ public class LinearLayoutBuilder {
 
         return linearLayout;
     }
+
 }
 
 
