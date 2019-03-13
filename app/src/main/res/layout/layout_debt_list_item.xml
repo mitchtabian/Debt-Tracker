@@ -76,7 +76,18 @@
                 android:id="@+id/quick_settle"
                 android:layout_gravity="right"
                 android:background="@color/white"
-                android:src="@drawable/ic_check_green_24dp"/>
+                android:src="@drawable/ic_check_green_24dp"
+                android:visibility="gone"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/debt_settled"
+                android:textColor="@color/grey"
+                android:text="Settled"
+                android:textSize="14sp"
+                android:layout_gravity="right"
+                android:visibility="gone"/>
 
         </LinearLayout>
 

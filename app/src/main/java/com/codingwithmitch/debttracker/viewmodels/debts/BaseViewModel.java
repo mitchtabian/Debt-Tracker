@@ -10,6 +10,7 @@ import com.codingwithmitch.debttracker.repositories.ContactsRepository;
 import com.codingwithmitch.debttracker.repositories.DebtsRepository;
 import com.codingwithmitch.debttracker.util.Resource;
 
+import java.lang.ref.WeakReference;
 import java.util.Date;
 import java.util.List;
 

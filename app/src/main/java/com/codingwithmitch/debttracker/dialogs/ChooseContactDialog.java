@@ -1,4 +1,4 @@
-package com.codingwithmitch.debttracker;
+package com.codingwithmitch.debttracker.dialogs;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
+import com.codingwithmitch.debttracker.R;
 import com.codingwithmitch.debttracker.adapters.ChooseContactRecyclerAdapter;
 import com.codingwithmitch.debttracker.models.Person;
 
@@ -30,10 +31,8 @@ public class ChooseContactDialog extends DialogFragment implements ChooseContact
     private static ChooseContactDialog instance;
 
     // ui
-    private RecyclerView mRecyclerView;
 
-    // vars
-    private ChooseContactRecyclerAdapter mAdapter;
+
     private List<Person> people;
     private OnRetrievedPerson onRetrievedPerson;
 
@@ -70,15 +69,16 @@ public class ChooseContactDialog extends DialogFragment implements ChooseContact
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onViewCreated: called.");
         super.onViewCreated(view, savedInstanceState);
-        mRecyclerView = view.findViewById(R.id.contacts_list);
 
-        init();
+        init(view);
     }
 
-    private void init(){
-        mAdapter = new ChooseContactRecyclerAdapter(this, initGlide(), people);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mRecyclerView.setAdapter(mAdapter);
+    private void init(View view){
+        // vars
+        RecyclerView recyclerView = view.findViewById(R.id.contacts_list);
+        ChooseContactRecyclerAdapter mAdapter = new ChooseContactRecyclerAdapter(this, initGlide(), people);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        recyclerView.setAdapter(mAdapter);
     }
 
     public RequestManager initGlide(){
@@ -97,14 +97,17 @@ public class ChooseContactDialog extends DialogFragment implements ChooseContact
         getDialog().dismiss();
     }
 
-    public interface OnRetrievedPerson{
-        void onPersonClicked(Person person);
-    }
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         onRetrievedPerson = (OnRetrievedPerson) getActivity();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        onRetrievedPerson = null;
     }
 }
 

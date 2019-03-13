@@ -99,7 +99,7 @@ public class DebtRecyclerAdapter extends RecyclerView.Adapter<DebtRecyclerAdapte
 
         ImageView personPortrait;
         ImageButton quickSettle;
-        TextView name, lendingDate, debtAmount;
+        TextView name, lendingDate, debtAmount, debtSettled;
         OnDebtSelected onDebtSelected;
         RequestManager requestManager;
 
@@ -110,6 +110,7 @@ public class DebtRecyclerAdapter extends RecyclerView.Adapter<DebtRecyclerAdapte
             name = itemView.findViewById(R.id.person_name);
             debtAmount = itemView.findViewById(R.id.debt_amount);
             lendingDate = itemView.findViewById(R.id.lending_date);
+            debtSettled = itemView.findViewById(R.id.debt_settled);
 
             this.onDebtSelected = onDebtSelected;
             this.requestManager = requestManager;
@@ -132,15 +133,18 @@ public class DebtRecyclerAdapter extends RecyclerView.Adapter<DebtRecyclerAdapte
                 debtAmount.setText(debtRemaining);
             }
             else{
-                debtAmount.setText("Settled");
+                String settledString = "$" + BigDecimalUtil.getValue(data.debt.getDebt_amount());
+                debtAmount.setText(settledString);
             }
 
 
             if(!data.debt.getIs_settled()){
                 quickSettle.setVisibility(View.VISIBLE);
+                debtSettled.setVisibility(View.GONE);
             }
             else{
                 quickSettle.setVisibility(View.GONE);
+                debtSettled.setVisibility(View.VISIBLE);
             }
         }
 

@@ -90,6 +90,11 @@ public abstract class CursorBoundResource<CursorObject> {
     public final LiveData<Resource<List<CursorObject>>> getAsLiveData(){
         return results;
     }
+
+    public void done(){
+        // Nullify the cursor or will get memory leaks
+        cursor = null;
+    };
 }
 
 

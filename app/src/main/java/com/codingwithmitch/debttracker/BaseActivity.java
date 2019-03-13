@@ -13,6 +13,8 @@ import android.widget.DatePicker;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
+import com.codingwithmitch.debttracker.dialogs.ChooseContactDialog;
+import com.codingwithmitch.debttracker.dialogs.OnRetrievedPerson;
 import com.codingwithmitch.debttracker.models.Person;
 import com.google.android.material.circularreveal.CircularRevealFrameLayout;
 
@@ -32,7 +34,7 @@ import static com.codingwithmitch.debttracker.util.Constants.PERMISSION_REQUEST_
 
 public abstract class BaseActivity extends AppCompatActivity implements
         DatePickerDialog.OnDateSetListener,
-        ChooseContactDialog.OnRetrievedPerson
+        OnRetrievedPerson
 {
 
     private static final String TAG = "BaseActivity";

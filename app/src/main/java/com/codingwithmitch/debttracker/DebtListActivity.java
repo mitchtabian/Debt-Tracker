@@ -1,6 +1,5 @@
 package com.codingwithmitch.debttracker;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProviders;
@@ -9,10 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
@@ -39,21 +36,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.math.BigDecimal;
 import java.util.Calendar;
 
-import static com.codingwithmitch.debttracker.util.MyPreferenceManager.ORDER_BY_NEWEST;
-import static com.codingwithmitch.debttracker.util.MyPreferenceManager.SHOW_ONLY_SETTLED;
-
 
 public class DebtListActivity extends BaseActivity implements
         View.OnClickListener,
-        DebtRecyclerAdapter.OnDebtSelected,
-        SharedPreferences.OnSharedPreferenceChangeListener
+        DebtRecyclerAdapter.OnDebtSelected
 {
 
     private static final String TAG = "DebtListActivity";
 
     // ui
     private RecyclerView mRecyclerView;
-    private TextView mTotalDebt;
+    private TextView mToolbarTotal, mToolbarDebtHeader;
     private FloatingActionButton mFab;
 
 
@@ -66,8 +59,9 @@ public class DebtListActivity extends BaseActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debt_list);
         mRecyclerView = findViewById(R.id.recycler_view);
-        mTotalDebt = findViewById(R.id.total_debt);
+        mToolbarTotal = findViewById(R.id.toolbar_total);
         mFab = findViewById(R.id.add_new_debt);
+        mToolbarDebtHeader = findViewById(R.id.toolbar_debt_header);
 
         viewModel = ViewModelProviders.of(this).get(DebtListViewModel.class);
 
@@ -132,9 +126,10 @@ public class DebtListActivity extends BaseActivity implements
             }
         });
 
-        viewModel.getTotalDebt().observe(this, s -> {
+        viewModel.getToolbarTotal().observe(this, s -> {
             s = "$" + s;
-            mTotalDebt.setText(s);
+            mToolbarTotal.setText(s);
+            enableSettledToolbar(viewModel.getMyPreferenceManager().getShowOnlySettled());
         });
 
         viewModel.getSearchViewFilter().observe(this, s -> mAdapter.getFilter().filter(s));
@@ -147,6 +142,15 @@ public class DebtListActivity extends BaseActivity implements
                 hideFab();
             }
         });
+    }
+
+    private void enableSettledToolbar(boolean isEnabled){
+        if(isEnabled){
+            mToolbarDebtHeader.setText("total settled:");
+        }
+        else{
+            mToolbarDebtHeader.setText("total debt:");
+        }
     }
 
     private void showFab(){
@@ -254,13 +258,12 @@ public class DebtListActivity extends BaseActivity implements
         final TextView settleSwitchTitle = new TextView(this);
         settleSwitchTitle.setText("Show settled debts");
         settleSwitchTitle.setTextSize(17);
-        settleSwitchTitle.setPadding(0, 0, 0, 20);
         settleSwitchTitle.setTextColor(Color.BLACK);
         Switch settledSwitch = new Switch(this);
         settledSwitch.setLayoutParams(params);
         settledSwitch.setChecked(viewModel.getMyPreferenceManager().getShowOnlySettled());
         RelativeLayout relativeSettledSwitch = new RelativeLayout(this);
-        relativeSettledSwitch.setPadding(0, 40, 0, 40);
+        relativeSettledSwitch.setPadding(0, 0, 0, 40);
         relativeSettledSwitch.addView(settleSwitchTitle);
         relativeSettledSwitch.addView(settledSwitch);
 
@@ -268,7 +271,6 @@ public class DebtListActivity extends BaseActivity implements
         final TextView orderSwitchTitle = new TextView(this);
         orderSwitchTitle.setText("Order by newest to oldest");
         orderSwitchTitle.setTextSize(17);
-
         orderSwitchTitle.setTextColor(Color.BLACK);
         Switch orderSwitch = new Switch(this);
         orderSwitch.setLayoutParams(params);
@@ -357,44 +359,6 @@ public class DebtListActivity extends BaseActivity implements
         // do nothing
     }
 
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        PreferenceManager.getDefaultSharedPreferences(this).registerOnSharedPreferenceChangeListener(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        PreferenceManager.getDefaultSharedPreferences(this).unregisterOnSharedPreferenceChangeListener(this);
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        switch (key){
-
-            case ORDER_BY_NEWEST:{
-                if(sharedPreferences.getBoolean(key, true)){
-                    Log.d(TAG, "onPreferenceChange: filtering newest to oldest.");
-                }
-                else{
-                    Log.d(TAG, "onPreferenceChange: filtering oldest to newest.");
-                }
-                break;
-            }
-
-            case SHOW_ONLY_SETTLED:{
-                if(sharedPreferences.getBoolean(key, true)){
-                    Log.d(TAG, "onPreferenceChange: showing only settled debts.");
-                }
-                else{
-                    Log.d(TAG, "onPreferenceChange: showing only un-settled debts.");
-                }
-                break;
-            }
-        }
-    }
 }
 
 

@@ -264,6 +264,7 @@ public class DebtNewActivity extends BaseActivity implements
         viewModel.setSelectedDate(selectedDate);
     }
 
+
     @Override
     public void onPersonClicked(Person person) {
         viewModel.setSelectedPerson(person);

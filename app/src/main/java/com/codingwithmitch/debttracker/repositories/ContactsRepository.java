@@ -92,8 +92,12 @@ public class ContactsRepository {
                     public void onComplete() {
                         Log.d(TAG, "onComplete: called.");
                         setValue(Resource.success(contacts));
+                        done();
                     }
+
                 };
+
+
             }
         }.getAsLiveData();
     }

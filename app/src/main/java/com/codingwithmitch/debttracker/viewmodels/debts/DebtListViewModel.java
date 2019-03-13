@@ -24,7 +24,7 @@ import androidx.lifecycle.MutableLiveData;
 public class DebtListViewModel extends BaseViewModel {
 
     private static final String TAG = "DebtListViewModel";
-    private MutableLiveData<String> totalDebt = new MutableLiveData<>();
+    private MutableLiveData<String> toolbarTotal = new MutableLiveData<>();
     private MediatorLiveData<Resource<List<DebtAndAllPayments>>> dataSet = new MediatorLiveData<>();
     private MutableLiveData<String> searchViewFilter = new MutableLiveData<>();
     private MutableLiveData<Integer> appBarVerticalOffset = new MutableLiveData<>();
@@ -38,10 +38,9 @@ public class DebtListViewModel extends BaseViewModel {
         myPreferenceManager = MyPreferenceManager.getInstance(application);
     }
 
-    public LiveData<String> getTotalDebt(){
-        return totalDebt;
+    public LiveData<String> getToolbarTotal(){
+        return toolbarTotal;
     }
-
 
     public LiveData<Resource<List<DebtAndAllPayments>>> getDataSet(){
         return dataSet;
@@ -86,16 +85,20 @@ public class DebtListViewModel extends BaseViewModel {
                 dataSet.setValue(listResource);
                 if(listResource.data != null){
                     double debtSum = 0;
+                    double totalPayed = 0;
                     for(DebtAndAllPayments data: listResource.data){
-                        if(!data.debt.getIs_settled()){
-                            double totalPayed = 0;
                             for(PaymentAmount paymentAmount: data.payments){
                                 totalPayed = totalPayed + paymentAmount.amount.doubleValue();
+                                Log.d(TAG, "retrieveAllDebtsAndPayments: total payed: " + totalPayed);
                             }
                             debtSum = debtSum + (data.debt.getDebt_amount().doubleValue() - totalPayed);
-                        }
                     }
-                    totalDebt.setValue(BigDecimalUtil.getValue(new BigDecimal(debtSum)));
+                    if(getMyPreferenceManager().getShowOnlySettled()){
+                        toolbarTotal.setValue(BigDecimalUtil.getValue(new BigDecimal(totalPayed)));
+                    }
+                    else{
+                        toolbarTotal.setValue(BigDecimalUtil.getValue(new BigDecimal(debtSum)));
+                    }
                 }
                 if(listResource.status.equals(Resource.Status.SUCCESS)
                         || listResource.status.equals(Resource.Status.ERROR)){
