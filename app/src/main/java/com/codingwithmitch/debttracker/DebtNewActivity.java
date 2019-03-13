@@ -45,7 +45,7 @@ public class DebtNewActivity extends BaseActivity implements
 
     // ui
     private TextView mSelectedLendingDate, mSelectedContact;
-    private EditText mDebtAmount;
+    private EditText mDebtAmount, mDescription;
 
     // vars
     private DebtNewViewModel viewModel;
@@ -58,6 +58,7 @@ public class DebtNewActivity extends BaseActivity implements
         mSelectedContact = findViewById(R.id.selected_contact);
         mSelectedLendingDate = findViewById(R.id.selected_lending_date);
         mDebtAmount = findViewById(R.id.debt_amount);
+        mDescription = findViewById(R.id.debt_description);
 
         findViewById(R.id.lending_date_selector).setOnClickListener(this);
         findViewById(R.id.add_contact).setOnClickListener(this);
@@ -85,7 +86,8 @@ public class DebtNewActivity extends BaseActivity implements
                         Calendar.getInstance().getTime(),
                         viewModel.getSelectedDate().getValue(),
                         new BigDecimal(Double.parseDouble((mDebtAmount.getText().toString().equals("") ? "0.00" : mDebtAmount.getText().toString()))),
-                        false
+                        false,
+                        (mDescription.getText().toString().equals("") ? " " : mDescription.getText().toString())
                 )
         ).observe(this, debtResource -> {
             if(debtResource != null){

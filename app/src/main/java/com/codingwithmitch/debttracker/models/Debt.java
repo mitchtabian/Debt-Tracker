@@ -39,12 +39,17 @@ public class Debt implements Parcelable {
     @ColumnInfo(name = "is_settled")
     private Boolean is_settled;
 
-    public Debt(Person person, Date timestamp, Date lending_date, BigDecimal debt_amount, Boolean is_settled) {
+    @ColumnInfo(name = "description")
+    private String description;
+
+    public Debt(Person person, Date timestamp, Date lending_date, BigDecimal debt_amount,
+                Boolean is_settled, String description) {
         this.person = person;
         this.timestamp = timestamp;
         this.lending_date = lending_date;
         this.debt_amount = debt_amount;
         this.is_settled = is_settled;
+        this.description = description;
     }
 
     @Ignore
@@ -59,7 +64,7 @@ public class Debt implements Parcelable {
         timestamp = (Date) in.readSerializable();
         lending_date = (Date) in.readSerializable();
         debt_amount = (BigDecimal) in.readSerializable();
-
+        description = in.readString();
     }
 
     public static final Creator<Debt> CREATOR = new Creator<Debt>() {
@@ -122,6 +127,14 @@ public class Debt implements Parcelable {
         this.debt_amount = debt_amount;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -135,6 +148,7 @@ public class Debt implements Parcelable {
         dest.writeSerializable(timestamp);
         dest.writeSerializable(lending_date);
         dest.writeSerializable(debt_amount);
+        dest.writeString(description);
     }
 
     @Override
@@ -146,6 +160,7 @@ public class Debt implements Parcelable {
                 ", lending_date=" + lending_date +
                 ", debt_amount=" + debt_amount +
                 ", is_settled=" + is_settled +
+                ", description='" + description + '\'' +
                 '}';
     }
 }

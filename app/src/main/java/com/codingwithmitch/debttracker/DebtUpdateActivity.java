@@ -55,6 +55,7 @@ public class DebtUpdateActivity extends BaseActivity implements
     // ui
     private TextView mSelectedLendingDate, mInitialAmount, mSelectedContact,
             mRemainingAmount, mStatus;
+    private EditText mDescription;
     private ImageButton mStatusIcon;
     private RecyclerView mRecyclerView;
     private PaymentsRecyclerAdapter mAdapter;
@@ -75,6 +76,7 @@ public class DebtUpdateActivity extends BaseActivity implements
         mRecyclerView = findViewById(R.id.payments_recyclerview);
         mStatus = findViewById(R.id.debt_status);
         mStatusIcon = findViewById(R.id.debt_status_icon);
+        mDescription = findViewById(R.id.debt_description);
 
         findViewById(R.id.lending_date_selector).setOnClickListener(this);
         findViewById(R.id.add_payment).setOnClickListener(this);
@@ -343,6 +345,7 @@ public class DebtUpdateActivity extends BaseActivity implements
 
         String initialDebtAmount = "$" + BigDecimalUtil.getValue(debt.getDebt_amount());
         mInitialAmount.setText(initialDebtAmount);
+        mDescription.setText((debt.getDescription().equals("") ? " " : debt.getDescription()));
     }
 
     @Override
@@ -537,6 +540,17 @@ public class DebtUpdateActivity extends BaseActivity implements
         }
     };
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        // update the description
+        if(!viewModel.getDebt().getValue().getDescription().equals(mDescription.getText().toString())){
+            Debt debt = viewModel.getDebt().getValue();
+            debt.setDescription(mDescription.getText().toString());
+            viewModel.setDebt(debt);
+        }
+    }
 }
 
 

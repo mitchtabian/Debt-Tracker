@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <!-- Debt Status -->
     <TextView
@@ -204,6 +206,35 @@
     </LinearLayout>
 
 
+    <!-- Debt Header -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/debt_description_header"
+        android:text="Description"
+        app:theme="@style/TextHeaderTheme"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/remaining_container"
+        android:layout_marginTop="@dimen/large_margin_top"/>
+
+    <!-- Debt description -->
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/debt_description"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/dollar_sign"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/debt_description_header"
+        android:textAlignment="textStart"
+        app:theme="@style/TextItemTheme"
+        android:layout_marginTop="@dimen/default_margin_top"
+        android:hint="..."
+        android:padding="5dp"
+        android:background="@drawable/grey_border_all_sides"/>
+
 
     <!-- Payments Header -->
     <TextView
@@ -215,7 +246,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/initial_container"
+        app:layout_constraintTop_toBottomOf="@+id/debt_description"
         android:layout_marginTop="@dimen/large_margin_top"/>
 
     <!-- Payments List -->

@@ -38,7 +38,7 @@ public class MyPreferenceManager {
     }
 
     public boolean getShowOnlySettled(){
-        return preferences.getBoolean(SHOW_ONLY_SETTLED, true);
+        return preferences.getBoolean(SHOW_ONLY_SETTLED, false);
     }
 
     public boolean getOrderByNewest(){
